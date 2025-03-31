@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import Login from './pages/Auth/login';
-import SingUp from './pages/Auth/singup';
+import Login from './pages/Auth/Login';
+import SingUp from './pages/Auth/SingUp';
 import Dashboard from './pages/Admin/Dashboard';
 import ManagerTasks from './pages/Admin/ManagerTasks';
 import CreateTask from './pages/Admin/CreateTask';
