@@ -1,12 +1,13 @@
 
 const express = require('express');
-const { model } = require('mongoose');
+const { login, register, getProfile, updateProfile } = require('../controllers/authController');
+const { protect } = require('../middlewares/authMiddleware');
 
 const router = express.Router(); 
 
-router.post('/login', loginUser);
-router.post('/register', registerUser);
-router.get('/profile', protect, getUserProfile);
-router.put('/profile', protect, updateUserProfile);
+router.post('/register', register);
+router.post('/login', login);
+router.get('/profile', protect, getProfile);
+router.put('/profile', protect, updateProfile);
 
 module.exports = router;
