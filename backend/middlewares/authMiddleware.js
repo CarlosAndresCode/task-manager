@@ -5,13 +5,21 @@ const { model } = require('mongoose');
 // Middleware to protect routes
 const protect = async (req, res, next) => {
     try {
+        // console.log(req.headers.authorization);
+        
         let token = req.headers.authorization;
         if (!token) {
             return res.status(401).json({ message: 'Not authorized, no token' });
         }
         token = token.split(' ')[1]; // Remove 'Bearer' from token
+        // console.log(token);
+        
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = await User.findById(decoded.id).select('-password'); // Exclude password from user object
+        console.log(decoded.userId);
+        user = await User.findById(decoded.userId).select('-password'); // Exclude password from user object
+        req.user = user; // Attach user to request object
+        console.log(user);
+        
         next();
     } catch (error) {
         res.status(401).json({ message: 'Not authorized, token failed' });
