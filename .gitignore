@@ -1,0 +1,6 @@
+# Ignorar las dependencias de Node.js
+backend/node_modules/*
+frontend/node_modules/*
+
+# Ignorar la carpeta de uploads en el backend
+backend/upload/*

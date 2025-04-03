@@ -1,3 +1,4 @@
+const upload = require('../middlewares/uploadMiddleware');
 const User = require('../models/User');
 const { encryptPassword, comparePassword } = require('../utils/passwordHash');  
 // const { generateToken } = require('../utils/generateToken');
@@ -113,8 +114,6 @@ const login = async (req, res) => {
 // @access  Private( requires jwt token)
 const getProfile = async (req, res) => {
     try {
-        console.log(req.user.id);
-        
         const user = await User.findById(req.user.id).select('-password');
         
         if (!user) {
@@ -138,7 +137,24 @@ const updateProfile = async (req, res) => {
     }
 };
 
+const uploadImage = async (req, res) => {
+    try {
+    
+        upload.single('image'), (req, res) => {
+            if (!req.file) {
+                return res.status(400).json({ message: 'No file uploaded' });
+            }
+        }
 
-module.exports = { register, login, getProfile, updateProfile };
+        const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+
+        res.status(200).json({ imageUrl });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+
+module.exports = { register, login, getProfile, updateProfile, uploadImage };
 
 

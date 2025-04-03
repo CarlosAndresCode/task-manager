@@ -1,12 +1,12 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const path = require("path");
 const app = express();
 const connectDB = require("./config/db");
 
 
 const authRouter = require("./router/authRoutes");
+const userRoutes = require("./router/userRoutes");
 const { log } = require("console");
 
 const PORT = process.env.PORT || 5000;
@@ -26,17 +26,15 @@ connectDB();
 
 app.use(express.json());
 
-
-
-// Router
-app.use('/api/auth', authRouter);
-// app.use('/api/users', userRoutes);
-// app.use('/api/tasks', taskRoutes);
-// app.use('/api/reports', reportRoutes);
-
 app.get("/", (req, res) => {
     res.send("API is running...");
 });
+
+// Router
+app.use('/api/auth', authRouter);
+app.use('/api/users', userRoutes);
+// app.use('/api/tasks', taskRoutes);
+// app.use('/api/reports', reportRoutes);
 
 //Start the server
 const port = process.env.PORT || 5000;
