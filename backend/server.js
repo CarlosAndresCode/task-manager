@@ -4,12 +4,8 @@ const cors = require("cors");
 const app = express();
 const connectDB = require("./config/db");
 
-
 const authRouter = require("./router/authRoutes");
 const userRoutes = require("./router/userRoutes");
-const { log } = require("console");
-
-const PORT = process.env.PORT || 5000;
 
 // Middleware to handle CORS
 app.use(
@@ -20,7 +16,6 @@ app.use(
     })
 );
 
-
 // Connect to MongoDB
 connectDB();
 
@@ -30,14 +25,15 @@ app.get("/", (req, res) => {
     res.send("API is running...");
 });
 
-// Router
+// Routers
 app.use('/api/auth', authRouter);
 app.use('/api/users', userRoutes);
 // app.use('/api/tasks', taskRoutes);
 // app.use('/api/reports', reportRoutes);
 
-//Start the server
-const port = process.env.PORT || 5000;
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+const PORT = process.env.PORT || 5000;
+
+// Start the server
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
